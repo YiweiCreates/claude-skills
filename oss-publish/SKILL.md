@@ -1,6 +1,6 @@
 ---
 name: oss-publish
-description: 把一个项目/skill 安全体面地开源到 GitHub。用户说"帮我开源这个/把X发到GitHub/做成公开仓库"时使用：开源版改写（路径通用化/剥内部引用/冷读审校）→发布前敏感审计（身份/路径/内部代号/密钥 grep 到零命中）→用户拍板仓库名与License→干净目录全新git历史+noreply身份发布→发布后从远端clone回来复扫→固定结构汇报。核心思想：push即永久公开，审计在发布前做足。
+description: 把一个项目/skill 安全体面地开源到 GitHub。用户说"帮我开源这个/把X发到GitHub/做成公开仓库"时使用：开源版改写（路径通用化/剥内部引用/冷读审校）→发布前敏感审计（身份/路径/内部代号/密钥 grep 到零命中）→用户拍板仓库名与License→干净目录全新git历史+noreply身份发布→发布后从远端clone回来复扫→固定结构汇报。核心思想：push即永久公开，审计在发布前做足。English triggers - "open-source this", "publish this to GitHub", "make this a public repo". A push is permanent, audit before publishing.
 ---
 
 # 项目开源（oss-publish）· 把一个项目安全体面地开源到 GitHub

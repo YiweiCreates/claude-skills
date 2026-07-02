@@ -1,6 +1,8 @@
 # claude-skills · 一套实战沉淀的 Claude 技能合集
 
-> A collection of battle-tested Claude Code skills (in Chinese): humanized writing, code-renovation surgery, safe open-source research & publishing, and Obsidian vault maintenance.
+**中文** | [English](README.en.md)
+
+> A collection of battle-tested Claude Code skills: humanized writing, code-renovation surgery, safe open-source research & publishing, and Obsidian vault maintenance.
 
 这里的每个技能都不是凭空设计的——都是在真实工作里反复用、踩过坑、修订过多版后固化下来的方法论。装进 Claude Code 后，对 AI 说一句触发词，它就按这套打法干活。
 

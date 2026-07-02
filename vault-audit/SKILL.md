@@ -4,6 +4,8 @@ description: |-
   Obsidian 知识库"大阅兵"——对整个 Vault 进行系统性审计和清理。扫描每个目录的结构健康度、文件内容质量、链接完整性、命名一致性，输出分级审计报告并逐项修复。
 
   MANDATORY TRIGGERS: 知识库审计、大阅兵、vault audit、清理知识库、梳理知识库、检查知识库、知识库体检、vault cleanup、vault review、整理 Obsidian、Obsidian 大扫除。也适用于：用户说"帮我看看知识库有什么问题"、"知识库乱了"、"文档需要整理"、"检查一下文件结构"等任何涉及对 Obsidian vault 做系统性检查和修复的场景。即使用户只是说"帮我整理一下"但当前工作目录是一个 Obsidian vault，也应当触发本 skill。
+
+  English triggers - "audit my vault", "my knowledge base is a mess", "full vault checkup", "clean up my Obsidian".
 ---
 
 # Obsidian 知识库大阅兵（vault-audit）

@@ -1,6 +1,6 @@
 ---
 name: code-renew
-description: 代码/项目升级手术——对"能跑但毛病多/死改改不出来"的项目做先诊断后分期的全面升级。用户说"全面升级/迭代升级/大重构/代码体检/这项目帮我做一次升级手术"时使用。流程：先备份→三路独立诊断（逐行审代码+浏览器截图巡检+关键数字独立核算）→分期施工提案拍板→每期改-守门-实测-commit→收工沉淀，绝不盲改。
+description: 代码/项目升级手术——对"能跑但毛病多/死改改不出来"的项目做先诊断后分期的全面升级。用户说"全面升级/迭代升级/大重构/代码体检/这项目帮我做一次升级手术"时使用。流程：先备份→三路独立诊断（逐行审代码+浏览器截图巡检+关键数字独立核算）→分期施工提案拍板→每期改-守门-实测-commit→收工沉淀，绝不盲改。English triggers - "full overhaul", "code health check", "renovate this project", "I keep fixing this and it keeps breaking". Diagnose first, never patch blindly.
 ---
 
 # 代码升级（code-renew）· 代码/项目升级手术

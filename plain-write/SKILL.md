@@ -1,6 +1,6 @@
 ---
 name: plain-write
-description: 说人话——把"给人看的东西"改成真人能一遍看懂的话。用户说"这太AI了/说人话/别端着/人家看不懂/全是黑话/太人机了/正常人不这么发微信"，或任何对外文档/邮件/消息定稿前使用。核心：先分清写文档（往多了解释，陌生人冷读）还是给认识的人发消息（往少了砍，删括号注解/铺垫/客服腔），两套方向相反。
+description: 说人话——把"给人看的东西"改成真人能一遍看懂的话。用户说"这太AI了/说人话/别端着/人家看不懂/全是黑话/太人机了/正常人不这么发微信"，或任何对外文档/邮件/消息定稿前使用。核心：先分清写文档（往多了解释，陌生人冷读）还是给认识的人发消息（往少了砍，删括号注解/铺垫/客服腔），两套方向相反。English triggers - "this sounds so AI", "humanize this", "make it sound human", "de-AI my writing", "too robotic". Works on text in any language.
 ---
 
 # 说人话（plain-write）· 写给真人看，别写给 AI 看

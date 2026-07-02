@@ -1,6 +1,6 @@
 ---
 name: oss-research
-description: 安全前提下把开源项目读透。用户让你研究/分析/评价任何开源项目、或丢来 GitHub 链接说"看看这个 repo / 怎么实现的 / 值不值得借鉴"时自动使用：云端确认身份+作者全景 Brief → 安全体检（查 install 钩子/危险模式 grep/审配置依赖，安全结论先行）→ --ignore-scripts 保险安装 → 读透架构与核心权衡（结论挂文件:行号）→ 沙箱真机跑通（只绑 127.0.0.1、不喂真实密钥）→ 固定结构研究报告并存档。
+description: 安全前提下把开源项目读透。用户让你研究/分析/评价任何开源项目、或丢来 GitHub 链接说"看看这个 repo / 怎么实现的 / 值不值得借鉴"时自动使用：云端确认身份+作者全景 Brief → 安全体检（查 install 钩子/危险模式 grep/审配置依赖，安全结论先行）→ --ignore-scripts 保险安装 → 读透架构与核心权衡（结论挂文件:行号）→ 沙箱真机跑通（只绑 127.0.0.1、不喂真实密钥）→ 固定结构研究报告并存档。English triggers - "research this GitHub repo", "analyze this open-source project", "is this repo safe / worth learning from". Audit install hooks before installing, run sandboxed, report with evidence.
 ---
 
 # 开源项目研究（oss-research）· 安全前提下把开源项目读透

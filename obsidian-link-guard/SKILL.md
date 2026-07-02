@@ -4,6 +4,8 @@ description: |
   Obsidian 链接防断裂技能。用于文件重命名/迁移后，批量修复 wikilink、保留兼容入口、扫描全库断链并输出修复结果。
 
   MANDATORY TRIGGERS: 改名后链接失效、红链、索引不到、空文件、404、断链、wikilink 修复、知识库链接体检、rename migration。
+
+  English triggers - "my wikilinks broke after renaming", "red links everywhere", "fix broken links in my vault", "zero-byte ghost files".
 ---
 
 # Obsidian Link Guard
