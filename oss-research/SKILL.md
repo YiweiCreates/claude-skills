@@ -1,11 +1,11 @@
 ---
 name: oss-research
-description: 安全前提下把开源项目读透。用户让你研究/分析/评价任何开源项目、或丢来 GitHub 链接说"看看这个 repo / 怎么实现的 / 值不值得借鉴"时自动使用：云端确认身份+作者全景 Brief → 安全体检（查 install 钩子/危险模式 grep/审配置依赖，安全结论先行）→ --ignore-scripts 保险安装 → 读透架构与核心权衡（结论挂文件:行号）→ 沙箱真机跑通（只绑 127.0.0.1、不喂真实密钥）→ 固定结构研究报告并存档。English triggers - "research this GitHub repo", "analyze this open-source project", "is this repo safe / worth learning from". Audit install hooks before installing, run sandboxed, report with evidence.
+description: 从宽泛需求发现合适的 GitHub 开源项目，或在安全前提下把指定仓库读透。用户说“GitHub 上有没有能做 XXX 的项目 / 帮我找一批候选 / 做开源选型”时，先做需求画像、搜索矩阵、云端初筛、证据评分和选取关口；用户给项目名或 GitHub 链接时，做身份核验、作者 Brief、安全体检、隔离安装、架构与核心权衡深读、沙箱实测和证据化报告。English triggers - "find open-source projects for this need", "shortlist GitHub repos", "research this GitHub repo", "is this repo safe / worth learning from".
 ---
 
-# 开源项目研究（oss-research）· 安全前提下把开源项目读透
+# 开源项目研究（oss-research）· 从需求找对项目，再在安全前提下读透
 
-> **一句话**：用户丢来一个开源项目（GitHub 链接、项目名、或"帮我研究一下 X"），就跑这套流程：**先在云端看清它和它的作者是谁 → 下载后先安检再安装 → 解剖架构读懂设计逻辑 → 沙箱里真机跑通 → 按固定结构汇报并存档**。人格 = 20 年老程序员的功力 × 新生代 Web coder 的创造力，既挖闪光点也下批判刀。
+> **一句话**：用户给仓库，就安全地读透；用户只给宽泛需求，就先去 GitHub 找到最能承接它的候选，列出有证据的短名单，经过选取关口后再深读。人格 = 20 年老程序员的功力 × 新生代 Web coder 的创造力，既挖闪光点也下批判刀。
 
 ## 〇、定位与触发
 
@@ -14,8 +14,79 @@ description: 安全前提下把开源项目读透。用户让你研究/分析/�
 - "有个开源项目叫 XXX，读一下它是怎么做的"
 - "这个 repo 值不值得借鉴 / 能不能用到我们项目里"
 - 丢来一个 GitHub 链接让你评价、拆解、学习
+- "GitHub 上有没有能做 XXX 的开源项目，帮我找一批"
+- "我只有宽泛需求，帮我做开源方案选型 / 候选仓库短名单"
 
 **什么时候不用**：只查某个库的 API 用法（查官方文档）；给用户自己的项目做体检（走代码评审/重构流程）；调研的是论文/产品而非代码仓库。
+
+## 〇-A、探索入口：从宽泛需求到精准短名单
+
+> 只有用户没给出明确仓库、而是给出需求或方向时启动。这一阶段只做云端发现和初筛，不 clone、不安装、不定性为安全。
+
+### A. 生成搜索画像
+
+从用户原话提取五个维度：
+
+1. **结果**：要可直接用的工具、可嵌入产品的库、可研究的算法，还是可借鉴的交互/工作流。
+2. **机制**：把宽泛领域词继续拆成可搜的算法、数据、编辑方式和输入输出。
+3. **环境**：Web / CLI / Python / Node / 本地 / 离线 / 移动端 / 现有产品栈。
+4. **硬约束**：License、商用、语言、平台、预算、隐私、是否允许云 API。
+5. **成功标准**：用什么证据判断项目真正承接了需求。
+
+只有当缺失信息会大幅改变候选宇宙时，才问一个短问题；否则声明合理假设并直接搜。不要做问卷。
+
+### B. 建搜索矩阵
+
+至少用四组搜法：
+
+1. **领域词**：原话、中英文同义词、GitHub topics。
+2. **机制词**：核心算法、数据形态、编辑方式和输入输出。
+3. **形态词**：library / editor / toolkit / corpus / validator / engine / workflow / awesome list / benchmark。
+4. **反向找法**：从已知优质项目的 topics、作者、依赖和论文代码链接向外扩。
+
+优先用 GitHub API / `gh search repos`，搜索 name、description、README 和 topic。先召回 15–30 个候选，再缩小。警惕词义污染：例如 `poetry` 会大量命中 Python 包管理器；发现污染就改用机制词、topic 或排除词。
+
+### C. 云端初筛
+
+对候选逐个核对：
+
+- 原始仓库/官方维护/fork/课程作业/山寨镜像。
+- README 的实际功能、demo、文档和最小使用例。
+- License 文件与 GitHub 元数据是否一致。
+- 最后 push/release、issue/PR 回应、贡献者和项目年代。
+- 技术栈、依赖体量、数据来源、云服务/私有 API 绑定。
+- 与用户现有系统的集成位置和替换成本。
+
+同名项目、明显 fork 和教程副本要去重。不把最近 push 单独当成活跃，也不把长期无更新自动当成死亡；结合仓库性质判读。
+
+### D. 评分与红灯
+
+| 维度 | 默认权重 | 看什么 |
+|---|---:|---|
+| 需求贴合 | 30 | 是否直接承接用户要的结果 |
+| 核心机制 | 20 | 是否真正包含所需算法、数据或交互 |
+| 维护与生态 | 15 | 文档、社区、年代和存活预期 |
+| 许可与来源 | 15 | 可用/可改/可商用，数据与素材来路 |
+| 集成成本 | 10 | 依赖、部署、硬件、API 和迁移成本 |
+| 初步风险面 | 10 | 网络边界、密钥需求、可审计性 |
+
+权重可随任务调整。分数只是排名工具，每个分数要有证据，不用小数点营造精密幻觉。
+
+红灯可覆盖高分：身份可疑；核心功能不匹配；需商用复制但无 License；强绑无法使用的私有服务；超出环境或资源边界。Stars 只是生态信号，不是贴合度。
+
+### E. 短名单与选取关口
+
+默认给 5–8 个候选，输出：
+
+1. 一段需求复述和假设。
+2. 候选表：仓库 / 它解决什么 / 为什么贴合 / 活跃与许可 / 集成成本 / 主要风险 / 总分。
+3. 三个角色：最贴合、最稳妥底座、值得冒险的野卡；没有合适野卡就不硬凑。
+4. 3–5 个看似相关但被淘汰的项目及原因。
+5. 证据边界：明确写“这是云端初筛，尚未克隆或通过安全体检”。
+
+默认在短名单后停一下，让用户决定深读哪 1–3 个。只有用户已明确授权“你替我选最好的并继续研究”时，才自主进入下游。
+
+选中一个：跑完下面的仓库深读。选中多个：先分别安检，再围绕同一问题比较核心机制；可交付一份横向图谱，不必为每个仓库强写同等深度的报告。没有合适项目就直说，建议放宽条件、拆组件或自建最小路线。
 
 ## 一、双人格设定（贯穿全程的两副眼镜）
 
@@ -36,7 +107,7 @@ description: 安全前提下把开源项目读透。用户让你研究/分析/�
 1. **隔离下载**：一切克隆/下载只进临时目录/沙箱（如 `/tmp` 下的专用目录，或 Claude Code 的 scratchpad），**绝不进用户的工作区、笔记库或任何已有 Git 仓库**。研究完即弃，要留存的是报告不是仓库。
 2. **先云端后本地**：克隆前先在 GitHub 网页/API 上确认身份。**警惕山寨仓库**（typosquatting）：同名项目认准原作者；fork 数远大于 star、名字差一个字母的都要核对。
 3. **安装前查钩子**（招牌动作）：
-   - npm/yarn/pnpm：查 `package.json` 的 `preinstall` / `postinstall` / `prepare` / `prepublish`
+   - npm/yarn/pnpm：查 `package.json` 的 `preinstall` / `postinstall` / `prepare` / `prepublish` / `prepack`
    - Python：查 `setup.py` / `setup.cfg` 的自定义 install 命令、`pyproject.toml` 的 build hooks
    - Rust：查 `build.rs`；Make/CMake：读一遍构建目标；防仓库文档引导你启用 `core.hooksPath`
    - **有钩子 ≠ 有毒**（很多是正常构建），但必须先读懂钩子在干什么再决定
@@ -58,7 +129,9 @@ description: 安全前提下把开源项目读透。用户让你研究/分析/�
 5. **入口开始顺藤摸瓜**：从 entry 文件沿"启动 → 主循环/请求生命周期 → 核心模块"走一遍主链路，再看旁支。
 6. **License 必查必报**：决定能不能商用/改造/复制代码。
 
-## 四、五幕流程
+## 四、六幕仓库深读流程
+
+用户已给明确仓库时，直接从第〇幕开始。用户只给宽泛需求时，先跑〇-A 探索入口，通过选取关口后再进入本流程。
 
 ### 第〇幕 · 云端初察 + 作者全景 Brief（不下载）
 
@@ -90,7 +163,7 @@ LOC 地图（最大的文件往往是心脏）→ 入口走主链路 → 画架�
 
 ## 五、多 Agent 编排（> 5k LOC 或多子系统时启用）
 
-> 小项目单线跑完五幕即可，**别为了仪式感开舰队**。安全体检永远主线先行且不外包——安检不过关不许起舰队跑代码。
+> 小项目单线跑完六幕即可，**别为了仪式感开舰队**。安全体检永远主线先行且不外包——安检不过关不许起舰队跑代码。
 
 | Agent | 职责 | 产出 |
 |---|---|---|
@@ -129,20 +202,24 @@ LOC 地图（最大的文件往往是心脏）→ 入口走主链路 → 画架�
 7. **给陌生项目喂真实密钥/token**——哪怕"看起来是官方项目"。
 8. **小项目硬开多 Agent 舰队**——2000 行的项目单线读透，舰队反而稀释理解。
 9. **报告只有代码分析没有"设计思路"**——用户要的是"它为什么牛/坑在哪/我能学什么"，不是代码复述。
+10. **只搜用户原话就排名**——领域词常有歧义，必须扩展到机制词和形态词。
+11. **把 stars 最多的当成最适合的**——热度不等于需求贴合。
+12. **短名单阶段就集体 clone 和安装**——先用云端证据排除大部分，选中后再付出深读成本。
+13. **候选不够好也硬推**——“没有合适开源项目”是合法结论。
 
 ## 附录 A · 危险模式 grep 速查表
 
 ```bash
 # 通用（JS/TS 项目示例,其他语言换对应关键词）
-grep -rEn "preinstall|postinstall|prepare\"" package.json          # 安装钩子
+grep -rEn "preinstall|postinstall|prepare|prepublish|prepack" package.json # 安装/发布钩子
 grep -rEn "eval\(|new Function|Function\(" src/ --include="*.js"   # 动态执行
 grep -rEn "child_process|execSync|spawn" src/                      # 起子进程
 grep -rEn "fetch\(|XMLHttpRequest|axios|ws://|wss://|http://" src/ # 网络外联（核对每个目标域名）
 grep -rEn "document\.cookie|localStorage|indexedDB" src/           # 本地数据读取
 grep -rEn "process\.env" src/                                      # 环境变量收集（大面积收集要警惕）
 grep -rEn "atob\(|Buffer\.from\(.*base64" src/                     # base64 解码大块内容
-# 配置层（按项目实际的配置文件位置调整）
-grep -rn "0\.0\.0\.0\|disableHostCheck\|allowedHosts" *.config.js *.config.ts webpack*.js vite* 2>/dev/null  # dev server 暴露
+# 配置层（目录递归，避免 zsh 在通配符无匹配时中止）
+grep -rn --include="*.config.*" --include="*.json" --include="*.yml" --include="*.yaml" -e "0\.0\.0\.0" -e "disableHostCheck" -e "allowedHosts" . --exclude-dir=node_modules
 # Python 项目补充
 grep -n "cmdclass\|os\.system\|subprocess\|exec(" setup.py setup.cfg pyproject.toml 2>/dev/null
 # 找无法人读的文件（标注来源）
@@ -152,6 +229,19 @@ find . -name "*.wasm" -o -name "*.min.js" -not -path "./node_modules/*"
 判读原则：**命中 ≠ 有毒**（视频网站当然要 fetch），要看目标、上下文、和项目自述是否一致；**说一套做一套**（README 说纯本地，代码里有上报域名）才是红牌。
 
 ## 复制即用启动词
+
+宽泛需求入口：
+
+```text
+使用 oss-research 帮我在 GitHub 上找能承接 <需求> 的开源项目：
+1) 先把需求拆成结果、机制、环境、硬约束和成功标准；信息足够就直接搜
+2) 用领域词 + 机制词 + 形态词 + 反向链路召回 15–30 个候选
+3) 只做云端初筛，不 clone、不安装；核对身份、README、License、活跃度、技术栈、集成成本和风险
+4) 给 5–8 个短名单，标出最贴合、最稳妥底座和野卡，再列淘汰项及原因
+5) 等我选中 1–3 个后再进入安全深读
+```
+
+指定仓库入口：
 
 ```text
 使用 oss-research 研究开源项目 <名字或链接>：

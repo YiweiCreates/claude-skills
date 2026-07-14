@@ -12,12 +12,12 @@
 |---|---|---|
 | [plain-write](plain-write/SKILL.md) 说人话 | 把"给人看的东西"改成真人能一遍看懂的话；文档往多了解释、发消息往少了砍，两套方向相反 | "这太 AI 了""说人话""别每句都括号解释" |
 | [code-renew](code-renew/SKILL.md) 代码升级 | 对"能跑但毛病多/死改改不出来"的项目做先诊断后分期的升级手术，绝不盲改 | "全面升级""代码体检""死改改不出来" |
-| [oss-research](oss-research/SKILL.md) 开源项目研究 | 安全前提下把开源项目读透：查钩子→保险安装→读透架构→沙箱真机跑通→固定结构报告 | "帮我研究一下 GitHub 上的 XXX" |
+| [oss-research](oss-research/SKILL.md) 开源项目研究 | 从宽泛需求搜索、评分并筛出 GitHub 候选；选中后查钩子→保险安装→读透架构→沙箱实测→证据化报告 | "GitHub 上有没有能做 XXX 的项目" / "帮我研究这个 repo" |
 | [oss-publish](oss-publish/SKILL.md) 项目开源 | 把项目安全体面地开源：发布前敏感审计到零命中→全新历史发布→发布后远端复扫 | "帮我把这个开源到 GitHub" |
 | [vault-audit](vault-audit/SKILL.md) 知识库大阅兵 | 对整个 Obsidian vault 做系统性审计：结构/链接/内容/一致性四查，红黄绿分级报告 | "知识库乱了""帮我做个全库体检" |
 | [obsidian-link-guard](obsidian-link-guard/SKILL.md) 链路修复 | 文件改名/迁移后修红链、清 0B 空文件、兼容跳转页、全库断链审计（附脚本） | "改名后链接全炸了""一堆红链" |
 
-几个技能互相衔接：`oss-research` 读懂一个项目 → `code-renew` 动手改造它 → `oss-publish` 把成果开源出去 → 所有对外文字用 `plain-write` 收尾。
+几个技能互相衔接：`oss-research` 先找对项目、再读懂它 → `code-renew` 动手改造它 → `oss-publish` 把成果开源出去 → 所有对外文字用 `plain-write` 收尾。
 
 ## 安装（Claude Code）
 
@@ -29,7 +29,7 @@ cp -r claude-skills/{plain-write,code-renew,oss-research,oss-publish,vault-audit
 cp -r claude-skills/plain-write ~/.claude/skills/
 ```
 
-装好后直接对 Claude 说触发词（如"帮我研究一下 GitHub 上的 XXX"）即可自动命中；也可以显式说"使用 oss-research 研究 XXX"。
+装好后直接对 Claude 说触发词（如"GitHub 上有没有能做 XXX 的项目"或"帮我研究这个 repo"）即可自动命中；也可以显式说"使用 oss-research 研究 XXX"。
 
 不用 Claude Code 的话，把对应 `SKILL.md` 全文贴给任何 AI 助手当操作规范也行。
 
