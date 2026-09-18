@@ -22,7 +22,7 @@
 ## 安装（Claude Code）
 
 ```bash
-git clone https://github.com/NovaKepler513/claude-skills.git
+git clone https://github.com/YiweiCreates/claude-skills.git
 # 全部安装（用户级，所有项目可用）
 cp -r claude-skills/{plain-write,code-renew,oss-research,oss-publish,vault-audit,obsidian-link-guard} ~/.claude/skills/
 # 或只装需要的

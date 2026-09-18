@@ -22,7 +22,7 @@ The skills chain together: `oss-research` finds the right project and reads it d
 ## Install (Claude Code)
 
 ```bash
-git clone https://github.com/NovaKepler513/claude-skills.git
+git clone https://github.com/YiweiCreates/claude-skills.git
 # install all (user-level, available in every project)
 cp -r claude-skills/{plain-write,code-renew,oss-research,oss-publish,vault-audit,obsidian-link-guard} ~/.claude/skills/
 # or just the ones you want
